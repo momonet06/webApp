@@ -1,0 +1,43 @@
+.page {
+  text-align: justify;
+  margin-top: 4px;
+  margin-bottom: 1px;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid hsl(var(--primary));
+  padding-top: 4px;
+  padding-bottom: 2px;
+  padding-left: 2px;
+  h1 {
+    @apply text-5xl my-7 text-primary text-shadow shadow-primary text-center font-lateef;
+  }
+  h2 {
+    @apply text-3xl pt-2 text-primary text-right pr-3 text-lime-800 font-lateef;
+  }
+  h3 {
+    @apply text-2xl pt-2 text-yellow-600 text-shadow  text-right  underline underline-offset-4 font-lateef;
+  }
+  p {
+    @apply indent-4 leading-loose text-justify px-1 pt-3;
+  }
+  ul {
+    @apply list-inside px-4 pt-3 leading-loose list-image-[url("/marker.ico")];
+    li > span {
+      @apply font-extrabold text-yellow-900 font-lateef text-xl;
+    }
+  }
+  ol {
+    * {
+      list-style-type: decimal;
+      list-style-position: inside;
+      display: block;
+    }
+
+    li {
+      padding-right: 25px;
+    }
+    p {
+      text-indent: 0%;
+      padding-right: 5px;
+    }
+  }
+}
