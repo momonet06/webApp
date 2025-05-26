@@ -16,27 +16,25 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-       // protocol: "http",
+        protocol: "http",
         hostname: "*",
-        //port: "1337",
+        port: "1337",
         pathname: "/uploads/**",
       },
     ],
   },
-  async rewrites() {
+  /*async rewrites() {
     return [
       {
         source: "/uploads/:path*",
-        destination:
-          "https://automatic-power-afee843d76.strapiapp.com/uploads/:path*",
+        destination: "http://localhost:1337/uploads/:path*",
       },
       {
         source: "/api/:path*",
-        destination:
-          "https://automatic-power-afee843d76.strapiapp.com/api/:path*",
+        destination: "http://localhost:1337/api/:path*",
       },
     ];
-  },
+  },*/
 };
 
 export default nextConfig;
