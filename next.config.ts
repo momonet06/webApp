@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  /*async rewrites() {
+  async rewrites() {
     return [
       {
         source: "/uploads/:path*",
@@ -34,7 +34,7 @@ const nextConfig: NextConfig = {
         destination: "http://localhost:1337/api/:path*",
       },
     ];
-  },*/
+  },
 };
 
 export default nextConfig;
