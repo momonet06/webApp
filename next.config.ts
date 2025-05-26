@@ -27,11 +27,13 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/uploads/:path*",
-        destination: "http://localhost:1337/uploads/:path*",
+        destination:
+          "https://automatic-power-afee843d76.strapiapp.com/uploads/:path*",
       },
       {
         source: "/api/:path*",
-        destination: "http://localhost:1337/api/:path*",
+        destination:
+          "https://automatic-power-afee843d76.strapiapp.com/api/:path*",
       },
     ];
   },
