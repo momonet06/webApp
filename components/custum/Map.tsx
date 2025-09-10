@@ -15,7 +15,7 @@ import "leaflet-defaulticon-compatibility";
 import { Calendar } from "@/components/ui/calendar";
 import useSWR from "swr";
 import { arTN } from "date-fns/locale";
-import Pluviometrie from "./GarphicalChart/Precipitation";
+//import Pluviometrie from "./GarphicalChart/Precipitation";
 
 const marker = [
   { code: 51, position: [10.6924, 36.4414] },
@@ -180,7 +180,7 @@ export const Map: React.FC<MapProps> = memo(({ center }) => {
           }}
           className="z-20 ms-2 mt-2 rounded-md shadow absolute border bg-primary-foreground scale-50 -translate-y-20 translate-x-16 sm:transform-none "
         />
-        <Pluviometrie jour={date} />
+        {/* <Pluviometrie jour={date} /> */}
       </div>
       <div style={{ display: "flex", marginTop: "10px", gap: "20px" }}>
         <button onClick={() => setMapType("roadmap")}>Roadmap</button>

@@ -1,18 +1,13 @@
 
 import { getStrapiData } from "@/lib/data";
 import Image from "next/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { getStrapiMedia } from "@/lib/helper-api";
 import React from "react";
 import { forbidden } from "next/navigation";
 import { Metadata,ResolvingMetadata } from "next";
+import { unstable_cache } from "next/cache";
+import BarrageDetails from "@/components/custum/BarrageDetails";
 
 interface BarrageProps {
   id: number;
@@ -48,7 +43,8 @@ export async function generateMetadata(props: {params:Params},parent:ResolvingMe
 }
 export default async function Page(props:{params:Params}) {
   const param = await props.params
-  const barrage: BarrageProps = await getBarrage(param.id);
+  const getCachedBarrage = unstable_cache(async()=>{return { data: await getBarrage(param.id) };},[param.id],{tags:["barrages"],revalidate:3600});
+  const barrage = await getCachedBarrage().then(res=>res.data)
   if(!barrage)return forbidden()
   return (
     <div className="mx-auto flex flex-col justify-center sm:w-[320px] md:w-[640px] lg:w-[768px] xl:w-[1024px] 2xl:w-[1280px]">
@@ -70,100 +66,7 @@ export default async function Page(props:{params:Params}) {
           </span>
         </div>
       </div>
-
-      <Card
-        key={barrage.id}
-        className="mx-1 rounded-xl border-2 border-primary/10 bg-secondary-foreground/10 shadow-lg"
-      >
-        <CardHeader className="flex items-center justify-center text-center">
-          <CardTitle
-            className="text-center text-3xl text-primary font-lateef pb-2"
-          >
-            سدّ {barrage.name}
-          </CardTitle>
-          <CardDescription className="relative h-[220px] w-[300px] sm:h-[200px] md:h-[240px] lg:h-[280px]">
-            <Image
-              src={
-                getStrapiMedia(
-                  barrage.images?.[0].url ??
-                    "/uploads/placeholder_6ee9924f77.svg"
-                )!
-              }
-              alt={(barrage.images?.[0].alternativeText as string) ?? "img"}
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-              fill
-              priority
-              className="rounded-md object-fill shadow-lg outline-dotted outline-offset-1 outline-primary/20"
-            />
-          </CardDescription>
-        </CardHeader>
-        <CardContent
-          className="text-justify indent-8 text-lg leading-relaxed font-amiri"
-        >
-          <div>
-            <ul
-              role="list"
-              className="mr-1 sm:mr-4 list-outside list-image-checkmark text-lg sm:text-xl font-medium marker:text-lime-600 md:mr-7"
-            >
-              <li>
-                المعتمدية:{" "}
-                <span className="font-medium text-blue-600">
-                  {barrage.delegation.name}
-                </span>
-              </li>
-              <li>
-                سنة الإنشاء:{" "}
-                <span className="font-sans font-medium text-cyan-600">
-                  {barrage.construction}
-                </span>
-              </li>
-
-              <li>
-                طاقة الإستيعاب الجملية:{" "}
-                <span className="font-sans font-medium text-cyan-600">
-                  {barrage.initial_capacity} م.م
-                  <sup>3</sup>
-                </span>
-              </li>
-              <li>
-                طاقة الإستيعاب المتاحة:{" "}
-                <span className="font-sans font-medium text-cyan-600">
-                  {barrage.capacity_actuel} م.م
-                  <sup>3</sup>
-                </span>
-              </li>
-
-              <li>
-                الكميّة المخزنة:{" "}
-                <span className="font-sans font-medium text-cyan-600">
-                  {barrage.stock} م.م
-                  <sup>3</sup>
-                </span>
-              </li>
-              <li>
-                نسبة التعبئة لهذا الموسم:{" "}
-                <span className="font-sans font-medium text-orange-600">
-                  {((barrage.stock / barrage.capacity_actuel) * 100).toFixed(2)}
-                  %
-                </span>
-              </li>
-            </ul>
-          </div>
-        </CardContent>
-        <CardFooter className="flex w-full flex-1 flex-row items-center justify-between">
-          <pre className={"text-sm text-muted-foreground font-lateef"}>
-            نشر بتاريخ&nbsp;
-            {new Date(barrage.publishedAt).toLocaleDateString("ar-TN", {
-              weekday: "long",
-              month: "long",
-              year: "numeric",
-              day: "2-digit",
-            })}
-          </pre>
-        </CardFooter>
-      </Card>
+    <BarrageDetails barrage={barrage}/>
     </div>
   );
 }

@@ -1,16 +1,17 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Items from "./Items";
 import { ChevronDown } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 interface ISidebarItem {
   id: number;
   name: string;
   label: string;
-  url?: string;
+  url?: any;
   target: string;
   items?: SubItem[];
   page?: PageProps;
@@ -38,7 +39,13 @@ interface SubItem {
   page: PageProps;
   image?: ImageProps;
 }
-const SidebarItems = ({ item }: { item: ISidebarItem }) => {
+const SidebarItems = ({
+  item,
+  setOpen,
+}: {
+  item: ISidebarItem;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const { label, url, items, page } = item;
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
@@ -46,11 +53,11 @@ const SidebarItems = ({ item }: { item: ISidebarItem }) => {
 
   const onClick = () => {
     setExpanded(!expanded);
+
     if (url) {
-      router.push(url);
-    }
-    if (page && page.path) {
-      router.push(page.path);
+      router.push(url, { scroll: true });
+    } else if (page) {
+      router.push(`/pages/${page.documentId}`, { scroll: true });
     }
   };
 
@@ -69,7 +76,6 @@ const SidebarItems = ({ item }: { item: ISidebarItem }) => {
       }
     }
   }, [pathname, url, page, items]);
-
   return (
     <>
       <div
@@ -88,14 +94,25 @@ const SidebarItems = ({ item }: { item: ISidebarItem }) => {
           />
         )}
       </div>
-
-      {expanded && items && items.length > 0 && (
-        <div className="flex flex-col  px-2 space-y-1 w-full">
-          {items.map((item) => (
-            <Items item={item} key={item.id} />
-          ))}
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {expanded && items && items.length > 0 && (
+          <motion.div
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: "auto" },
+              collapsed: { opacity: 0, height: 0 },
+            }}
+            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="flex flex-col  px-2 space-y-1 w-full"
+          >
+            {items.map((item) => (
+              <Items item={item} key={item.id} setOpen={setOpen} />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

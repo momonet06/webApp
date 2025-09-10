@@ -38,18 +38,23 @@ export default function Page({ searchParams }: { searchParams: SearchParams }) {
   const param = use(searchParams);
   const page = typeof param.page === "string" ? parseInt(param.page) : 1;
   const search = typeof param.search === "string" ? param.search : "";
-  const { data: actualities } = useSWR(
+  const {
+    data: actualities,
+    error,
+    isLoading,
+  } = useSWR(
     `/api/actualities?pagination[page]=${page}&pagination[pageSize]=12${
       search ? `&search=${search}` : ""
     }`
   );
+  if (isLoading) return <Loading />;
+  if (error) return <div>Erreur: {error.message}</div>;
 
-  if (!actualities) return <Loading />;
   const { meta, data } = actualities;
 
   return (
     <>
-      <Breadcrumb className="sticky top-9 p-3 z-20 bg-dark">
+      <Breadcrumb className="sticky top-10 sm:top-20 p-3 z-20 bg-dark">
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link href="/" className="flex flex-row items-start">

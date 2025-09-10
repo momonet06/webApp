@@ -40,13 +40,13 @@ export async function generateMetadata(props: {
 
 export default async function Page(props: { params: Params }) {
   const id = (await props.params).id;
-  const {  data } = await getPage(id);
+  const { data } = await getPage(id);
   const content = data.data;
   if (!data) notFound();
 
   return (
     <>
-      <Breadcrumb className="sticky top-10 sm:top-[80px] p-3 z-20 bg-dark">
+      <Breadcrumb className="sticky top-[39px] sm:top-[80px] p-3 z-20 bg-dark">
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link href="/" className="flex flex-row items-start">
@@ -77,7 +77,7 @@ export default async function Page(props: { params: Params }) {
         </div>
         <div>
           {data.block[0] && (
-            <div className="relative mx-auto w-full sm:max-w-[520px] ">
+            <div className="relative mx-auto w-full sm:max-w-[520px] pb-3">
               <Swiper medias={data.block[0].banner} />
             </div>
           )}

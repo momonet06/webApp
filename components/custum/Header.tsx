@@ -5,8 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitch from "./ThemeSwitch";
 import { getStrapiMedia } from "@/lib/helper-api";
-import { Facebook, Twitter } from "lucide-react";
+import { DynamicIcon } from "lucide-react/dynamic";
 import useSWR from "swr";
+import WeatherDisplay from "./WeatherDisplay";
+import Counter from "./Counter";
 interface ImageProps {
   id: number;
   url: string;
@@ -22,7 +24,8 @@ interface HeaderProps {
   };
 }
 export default function Header() {
-  const { data: header } = useSWR("/api/header");
+  const { data: header, error } = useSWR("/api/header");
+  if (error) return <span className="sr-only">Erreur: {error.message}</span>;
   if (!header) return <span className="sr-only">Loading</span>;
   const { data }: HeaderProps = header;
 
@@ -34,6 +37,7 @@ export default function Header() {
           width={60}
           height={60}
           alt="logo"
+          loading="eager"
           className=" bg-secondary rounded-full border-primary border-2 mx-auto hidden sm:block -mr-[6px]"
         />
       </div>
@@ -44,13 +48,29 @@ export default function Header() {
         </h1>
       </div>
       <div className="flex flex-1 justify-end">
+        <WeatherDisplay city="douane" />
         <div className="flex items-center  px-2 z-50">
           {data.socialmedia.map((item: any) => (
             <Link href={item.target.url} key={item.id} target="_blank">
               {item.icon == "facebook" ? (
-                <Facebook size={28} color={item.color} />
+                <>
+                  <DynamicIcon
+                    name="facebook"
+                    size={28}
+                    color="#0866FF"
+                    fill="#0866FF"
+                    strokeWidth={1}
+                  />
+                  <Counter />
+                </>
               ) : (
-                <Twitter size={28} color={item.color} />
+                <DynamicIcon
+                  name="twitter"
+                  size={28}
+                  color={item.color}
+                  fill={item.color}
+                  strokeWidth={1}
+                />
               )}
             </Link>
           ))}

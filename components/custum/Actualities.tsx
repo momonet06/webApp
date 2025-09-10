@@ -71,6 +71,7 @@ export default function Actualities({ data }: dataProps) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority
                     className="rounded-md object-cover"
+                    loading="eager"
                     alt={img.alternativeText ?? "article"}
                   />
                 </SwiperSlide>

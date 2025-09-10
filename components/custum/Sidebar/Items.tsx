@@ -2,21 +2,43 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 interface ItemProps {
   id: number;
   url: string;
-  page: { path: string; documentId: string };
+  page: {
+    path: string;
+    documentId: string;
+  };
   label: string;
 }
-const Items = ({ item }: { item: ItemProps }) => {
+const Items = ({
+  item,
+  setOpen,
+}: {
+  item: ItemProps;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const pathname = usePathname();
-  return (
+
+  return item.page ? (
     <Link
-      href={item.page ? `/pages/${item.page.documentId}` : item.url}
+      onNavigate={() => setOpen(false)}
+      href={`/pages/${item.page.documentId}`}
       className={`w-full rounded-md p-2 text-sm ${
-        (item.url === pathname || item.page?.path === pathname) &&
-        "text-blue-700 bg-white"
+        `/pages/${item.page.documentId}` === pathname &&
+        "text-blue-700 bg-white "
+      } `}
+    >
+      {item.label}
+    </Link>
+  ) : (
+    <Link
+      onNavigate={() => setOpen(false)}
+      href={{ pathname: item.url }}
+      className={`w-full rounded-md p-2 text-sm ${
+        item.url === pathname && "text-blue-700 bg-white "
       } `}
     >
       {item.label}

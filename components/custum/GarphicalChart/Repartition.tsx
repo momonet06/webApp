@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "motion/react";
 import { Chart } from "react-google-charts";
 
 export default function RepartitionSuperficie() {
@@ -131,7 +132,12 @@ export default function RepartitionSuperficie() {
     },
   };
   return (
-    <div className="flex flex-wrap gap-2 justify-center text-center w-full mt-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: [0.1, 0.3, 0.5,0.7,0.9, 1] }}
+      viewport={{ amount: 0.6 }}
+      className="flex flex-wrap gap-2 justify-center text-center w-full mt-2"
+    >
       <div className="relative w-full border sm:w-[305px] h-[333px] shadow-md border-primary rounded-xl items-center justify-center">
         <Chart
           chartType="PieChart"
@@ -193,6 +199,6 @@ export default function RepartitionSuperficie() {
           className="border-2 rounded-xl bg-primary/95 shadow-muted-foreground shadow-lg "
         />
       </div>
-    </div>
+    </motion.div>
   );
 }

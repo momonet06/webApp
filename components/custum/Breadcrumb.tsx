@@ -47,7 +47,7 @@ const Breadcrumbs = ({
             "hover:no-underline  hover:text-amber-700"
           )}
         >
-          <Link href={"/"} className="flex flex-row items-start">
+          <Link href={"/"} className="flex flex-row items-start" scroll={false}>
             <HomeIcon size={20} />
             {homeElement}
           </Link>
@@ -64,12 +64,11 @@ const Breadcrumbs = ({
           return (
             <React.Fragment key={index}>
               <li className={itemClasses}>
-                <Link href={href}>
-                  {
-                    Object.entries(keys).find(
-                      ([key]) => key == itemLink
-                    )?.[1]
-                  }
+                <Link
+                  href={href as __next_route_internal_types__.RouteImpl<string>}
+                  scroll={false}
+                >
+                  {Object.entries(keys).find(([key]) => key == itemLink)?.[1]}
                 </Link>
               </li>
               {pathNames.length !== index + 1 && separator}

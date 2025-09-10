@@ -40,4 +40,6 @@
       padding-right: 5px;
     }
   }
+  
+  figcaption{text-align: center;padding-top: 10px;}
 }

@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/card";
 import { getStrapiMedia, getStrapiURL } from "@/lib/helper-api";
 import React, { Suspense } from "react";
-import { forbidden } from "next/navigation";
+//import { forbidden } from "next/navigation";
 import ActualityViews from "@/components/custum/ActualityViews";
-import Avatar from "@/components/custum/Avatar";
+//import Avatar from "@/components/custum/Avatar";
 import ImageComponent from "@/components/custum/ImageComponent";
 import {
   Breadcrumb,
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import { HomeIcon, ChevronLeft } from "lucide-react";
-
+import { revalidateTag, unstable_cache } from "next/cache";
 
 const authToken = process.env.STRAPI_ACCESS_TOKEN;
 
@@ -32,12 +32,11 @@ async function getActuality(id: string) {
     (res) => res.data
   );
 
-  if (!actuality) forbidden();
+  // if (!actuality) forbidden();
   return actuality;
 }
 
- type Params = Promise<{ id: string }>;
-
+type Params = Promise<{ id: string }>;
 
 const updateActualiy = async (updatedData: number, id: string) => {
   try {
@@ -51,20 +50,31 @@ const updateActualiy = async (updatedData: number, id: string) => {
     });
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const dataUpdated = await res.json();
+
     return dataUpdated;
   } catch (error) {
     console.error("Error when updating data: ", error);
   }
+  revalidateTag("actualities");
 };
 export default async function Page(props: { params: Params }) {
   const param = await props.params;
   let actuality: any = undefined;
-  const currentData = await getActuality(param.id);
+  const getCachedActuality = unstable_cache(
+    async () => {
+      return { data: await getActuality(param.id) };
+    },
+    [param.id],
+    { tags: ["actualities"], revalidate: 10 }
+  );
+  //await getActuality(param.id);
+  const currentActuality = await getCachedActuality().then((res) => res.data);
 
-  if (currentData)
-    actuality = await updateActualiy(currentData.view + 1, param.id).then(
-      (data) => data.data
-    );
+  if (currentActuality)
+    actuality = await updateActualiy(
+      Number(currentActuality.view + 1),
+      param.id
+    ).then((data) => data.data);
 
   if (!actuality) return <>Loading...</>;
 
@@ -137,8 +147,8 @@ export default async function Page(props: { params: Params }) {
               {formatDate(actuality.createdAt)}
             </pre>
             <code className="font-semibold italic flex items-end text-xs">
-              {actuality.createdBy.username}@
-              <Avatar id={actuality.updatedBy.id} />
+              {actuality.createdBy ? actuality.createdBy.username : "crda"}@
+              {/* { <Avatar id={actuality.createdBy.id} /> }  */}
             </code>
           </CardFooter>
         </Card>

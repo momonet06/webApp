@@ -21,10 +21,19 @@ export default function ThemeSwitch() {
         alt="Loading Light/Dark Toggle"
         priority={false}
         title="Loading Light/Dark Toggle"
+        className="cursor-pointer"
       />
-    ); 
+    );
   if (resolvedTheme === "dark")
-    return <Sun color="black" size={20} onClick={() => setTheme("light")} />;
+    return <Sun color="black" size={25} onClick={() => setTheme("light")} className="cursor-pointer" strokeWidth={2} />;
   if (resolvedTheme === "light")
-    return <Moon color="white" size={20} onClick={() => setTheme("dark")} />;
+    return (
+      <Moon
+        color="white"
+        size={25}
+        onClick={() => setTheme("dark")}
+        className="cursor-pointer"
+        strokeWidth={2}
+      />
+    );
 }

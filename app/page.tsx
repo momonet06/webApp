@@ -1,4 +1,5 @@
 "use client";
+import { Loader2 } from "lucide-react";
 import Carousels from "@/components/custum/Carousel";
 import {
   Card,
@@ -15,10 +16,22 @@ import Link from "next/link";
 import useSWR from "swr";
 
 export default function Home() {
-  const { data: carouselData } = useSWR("/api/home-page");
-  if (!carouselData)
+  const { data: carouselData, error, isLoading } = useSWR("/api/home-page");
+  if (isLoading)
     return (
-      <h1 className="text-red-400">Erreur de communication avec le serveur!</h1>
+      <div className="block justify-center text-center mx-0">
+        <span>Tentative de chargement des données</span>
+        <Loader2
+          size={60}
+          className="text-teal-300 animate-spin inline-block justify-center"
+        />
+      </div>
+    );
+  if (error)
+    return (
+      <div className="text-red-500 justify-center text-center h-full block">
+        Erreur de connexion avec le serveur !
+      </div>
     );
   const { carousel, blocks } = carouselData.data;
   return (
@@ -48,6 +61,7 @@ export default function Home() {
                     alt="portail"
                     src={getStrapiMedia(portail.images[0].url) as string}
                     fill
+                    loading="eager"
                     sizes="(max-widh:680px) 50vw,100vw"
                     className="object-contain "
                   />

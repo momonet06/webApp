@@ -1,11 +1,12 @@
+import "./css/globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./css/globals.css";
 import Navbar from "@/components/custum/Navbar";
 import Header from "@/components/custum/Header";
 import { Providers } from "./providers";
 import { SWRProvider } from "./swr-provider";
 import ScrollTop from "@/components/custum/Scroll-top";
+import ContactUs from "@/components/custum/ContactUs";
 
 const amiri = localFont({
   src: "./fonts/Amiri.woff2",
@@ -17,6 +18,7 @@ const lateef = localFont({
   variable: "--font-lateef",
   weight: "100 900",
 });
+
 export const metadata: Metadata = {
   title: {
     default: "المندوبية الجهوية للتنمية الفلاحية بنابل",
@@ -32,20 +34,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="rtl" suppressHydrationWarning>
-      <body className={`${amiri.variable} ${lateef.variable}  antialiased`}>
+      <body className={`${amiri.variable} ${lateef.variable}  antialiased `}>
         <div className="container mx-auto ">
           <Providers>
             <SWRProvider>
-              <header className="sticky top-0 rounded-tr-md w-full bg-white dark:bg-inherit z-50 border-none ">
+              <header className="sticky scroll-auto top-0 rounded-tr-md w-full bg-white dark:bg-inherit z-50 border-none ">
                 <Header />
                 <Navbar />
               </header>
               <main className="rounded-sm shadow  z-10 ">
-                <div className="pt-0">
+                <div className="pt-2 bg-dark">
                   {children}
                   <ScrollTop />
                 </div>
               </main>
+              <footer>
+                <ContactUs />
+              </footer>
             </SWRProvider>
           </Providers>
         </div>

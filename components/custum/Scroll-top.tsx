@@ -9,7 +9,7 @@ export default function ScrollTop() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   const handleScroll = () => {
-    if (window.scrollY > window.innerHeight * 0.35) {
+    if (window.scrollY > window.innerHeight * 0.25) {
       setIsVisible(true);
     } else {
       setIsVisible(false);

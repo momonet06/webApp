@@ -47,7 +47,7 @@ export default async function Page(props: { params: Params }) {
 
   return (
     <>
-      <Breadcrumb className="relative top-0 p-3 z-20 bg-dark">
+      <Breadcrumb className="relative top-10 sm:top-20 p-3 z-20 bg-dark">
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link href="/" className="flex flex-row items-start">

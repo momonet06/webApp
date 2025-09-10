@@ -7,6 +7,7 @@ import {
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronLeft } from "lucide-react";
+import { SliderTab } from "@/components/custum/SliderTab";
 
 export const metadata: Metadata = {
   title: "السدود بنابل",
@@ -23,7 +24,7 @@ export default async function Layout({
   const { data } = barrages;
   return (
     <>
-      <Breadcrumb className="sticky top-0 p-3 z-20 bg-dark">
+      <Breadcrumb className="sticky top-[39px] sm:top-[80px] p-3 z-20 bg-dark">
         <BreadcrumbList>
           <BreadcrumbItem>
             <Link href="/" className="flex flex-row items-start">
@@ -39,21 +40,11 @@ export default async function Layout({
       </Breadcrumb>
       <section className="relative w-full space-y-2 container flex-col sm:inline-flex gap-2  mx-auto">
         <div className="max-w-sm mx-auto">
-          <ul className="flex bg-primary/10 rounded-2xl w-full h-10 items-center justify-between sm:px-2">
-            {data.map((brg: any) => (
-              <li key={brg.id}>
-                <Link
-                  href={`/barrages/${brg.documentId}`}
-                  className=" hover:text-orange-600 hover:bg-white px-2 rounded-md text-xl"
-                >
-                  {brg.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <SliderTab data={data} />
         </div>
 
         {children}
+      
       </section>
     </>
   );
