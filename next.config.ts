@@ -29,6 +29,20 @@ const nextConfig: NextConfig = {
     ],
     qualities: [25, 50, 75, 80, 90, 100],
   },
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: "/api/:path*",
+          destination: process.env.NEXT_PUBLIC_BASE_URL + "/api/:path*",
+        },
+        {
+          source: "/uploads/:path*",
+          destination: process.env.NEXT_PUBLIC_BASE_URL + "/uploads/:path*",
+        },
+      ],
+    };
+  },
 };
 
 export default withRspack(nextConfig);
