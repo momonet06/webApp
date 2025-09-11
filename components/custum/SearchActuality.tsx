@@ -18,17 +18,13 @@ export default function SearchActuality() {
     } else {
       params.delete("search");
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}` as any);
   }, 3000);
 
   return (
     <div className="relative w-72 rounded-md py-2 shadow-sm">
       <div className="pointer-events-none absolute inset-x-0 mr-1.5 mt-2">
-        <Search
-          size={15}
-          className="text-primary"
-          aria-hidden="true"
-        />
+        <Search size={15} className="text-primary" aria-hidden="true" />
       </div>
 
       <Input
