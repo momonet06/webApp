@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { useEffect, useState } from "react";
 import { EyeIcon } from "lucide-react";
+import LoadingIndicator from "./LoadingIndicator";
 interface ImageProps {
   id: number;
   url: string;
@@ -52,6 +53,7 @@ export default function Actuality({
         href={`/actualities/${actuality.documentId}`}
         key={actuality.id}
         target="_self"
+        prefetch={false}
       >
         <Card
           key={actuality.id}
@@ -102,7 +104,7 @@ export default function Actuality({
                 {formatDate(actuality.createdAt)}
               </p>
             </div>
-            <div className=" flex z-10 gap-1">
+            <div className="relative flex z-20 gap-1">
               <EyeIcon size={20} className="text-cyan-800 opacity-100" />
               <span className="text-sm text-cyan-900 font-medium">
                 {actuality.view}
@@ -110,7 +112,7 @@ export default function Actuality({
             </div>
           </CardFooter>
         </Card>
-
+        <LoadingIndicator />
         <div
           className={`${
             isNew ? "visible" : "hidden"

@@ -7,7 +7,7 @@ import { Providers } from "./providers";
 import { SWRProvider } from "./swr-provider";
 import ScrollTop from "@/components/custum/Scroll-top";
 import ContactUs from "@/components/custum/ContactUs";
-
+import { GoogleTagManager } from "@next/third-parties/google";
 const amiri = localFont({
   src: "./fonts/Amiri.woff2",
   variable: "--font-amiri",
@@ -45,6 +45,7 @@ export default function RootLayout({
               <main className="rounded-sm shadow  z-10 ">
                 <div className="pt-2 bg-dark">
                   {children}
+                  <GoogleTagManager gtmId="GTM-T6ZZ29CC" />
                   <ScrollTop />
                 </div>
               </main>

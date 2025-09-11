@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { HomeIcon, ChevronLeft } from "lucide-react";
 import { SliderTab } from "@/components/custum/SliderTab";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "السدود بنابل",
@@ -44,7 +45,7 @@ export default async function Layout({
         </div>
 
         {children}
-      
+      <GoogleTagManager gtmId="GTM-T6ZZ29CC" />
       </section>
     </>
   );

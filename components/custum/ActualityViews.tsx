@@ -3,11 +3,12 @@ import Ping from "./Ping";
 import { EyeIcon } from "lucide-react";
 
 import useActuality from "@/app/utils/hooks/useActuality";
+import LoadingIndicator from "./LoadingIndicator";
 
 export default function Views({ id }: { id: string }) {
   const { actuality } = useActuality(id);
 
-  if (!actuality) return <>Loading...</>;
+  if (!actuality) return <LoadingIndicator />;
 
   return (
     <div className="view-container">
@@ -17,7 +18,6 @@ export default function Views({ id }: { id: string }) {
       <div className="flex gap-1 justify-center">
         <EyeIcon size={24} />
         <p className=" text-[15px] font-black ">{actuality?.data.view}</p>
-       
       </div>
     </div>
   );

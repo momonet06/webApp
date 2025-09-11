@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import Views from "./ActualityViews";
+import LoadingIndicator from "./LoadingIndicator";
 interface ImageProps {
   id: number;
   url: string;
@@ -41,7 +42,7 @@ export default function Actualities({ data }: dataProps) {
       <Link
         href={`/actualities/${data.documentId}`}
         key={data.id}
-        target="_self"
+        prefetch={false}
       >
         <Card
           key={data?.id}
@@ -94,6 +95,7 @@ export default function Actualities({ data }: dataProps) {
             <Views id={data.documentId} />
           </CardFooter>
         </Card>
+        <LoadingIndicator />
       </Link>
     </div>
   );

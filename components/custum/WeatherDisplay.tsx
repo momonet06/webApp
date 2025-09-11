@@ -79,6 +79,7 @@ const RenderIcon = ({
           alt={description}
           quality={100}
           className="rounded-full  mt-[2px]"
+          title={description}
         />
       );
       break;
@@ -90,6 +91,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );
@@ -102,6 +104,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );
@@ -114,6 +117,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );
@@ -126,6 +130,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );
@@ -138,6 +143,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );
@@ -150,6 +156,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );
@@ -162,6 +169,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );
@@ -174,6 +182,7 @@ const RenderIcon = ({
           height={35}
           alt={description}
           quality={100}
+          title={description}
           className="rounded-full  mt-[2px]"
         />
       );

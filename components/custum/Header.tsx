@@ -51,7 +51,7 @@ export default function Header() {
         <WeatherDisplay city="douane" />
         <div className="flex items-center  px-2 z-50">
           {data.socialmedia.map((item: any) => (
-            <Link href={item.target.url} key={item.id} target="_blank">
+            <Link href={item.target.url} key={item.id} target="_blank" title="facebook">
               {item.icon == "facebook" ? (
                 <>
                   <DynamicIcon

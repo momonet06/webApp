@@ -152,10 +152,10 @@ export default async function Page(props: { params: Params }) {
             </code>
           </CardFooter>
         </Card>
+        <Suspense>
+          <ActualityViews id={actuality.documentId} />
+        </Suspense>
       </div>
-      <Suspense>
-        <ActualityViews id={actuality.documentId} />
-      </Suspense>
     </>
   );
 }
